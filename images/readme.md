@@ -2,7 +2,8 @@
 ## 人物摄影
 甜美：[苏瑶](./candy/readme.md)。  
 <img src="./candy/1.png" style="width: 300px" />
-[小雅](./xiaoya/readme.md)。  
+
+[小雅](./xiaoya/readme.md)。   
 <img src="./xiaoya/1.png" style="width: 300px" />
 
 
