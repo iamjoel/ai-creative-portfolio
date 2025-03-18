@@ -1,2 +1,3 @@
 # AI creative portfolio
-* [image](./images/readme.md)
+* [图片](./images/readme.md)
+* [网页](./html/readme.md)
