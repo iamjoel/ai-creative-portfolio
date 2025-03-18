@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日本京都旅行计划</title>
+    <!-- 引入图标字体 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Hero头图样式 */
+        .hero {
+            position: relative;
+            width: 100%;
+            height: 350px;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.6));
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+        
+        .hero-title {
+            color: white;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .hero-subtitle {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.2rem;
+            max-width: 600px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        
+        /* 卡片样式 */
+        .card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #333;
+            font-weight: bold;
+        }
+        
+        /* 基本信息样式 - 参考图片的样式 */
+        .basic-info {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .info-icon {
+            color: #4169E1;
+            font-size: 1.5rem;
+            margin-right: 15px;
+            flex-shrink: 0;
+            width: 24px;
+            text-align: center;
+        }
+        
+        .info-text {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .info-label {
+            color: #666;
+            margin-bottom: 3px;
+            font-size: 0.9rem;
+        }
+        
+        .info-content {
+            font-weight: 500;
+            color: #333;
+        }
+        
+        /* 行程安排样式 - 修改为与图片一致的折叠式 */
+        .day-item {
+            border-bottom: 1px solid #eee;
+        }
+        
+        .day-item:last-child {
+            border-bottom: none;
+        }
+        
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            cursor: pointer;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            margin: 8px 0;
+        }
+        
+        .day-header.active {
+            border-radius: 8px 8px 0 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .day-title {
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .day-toggle {
+            color: #999;
+            transition: transform 0.3s ease;
+        }
+        
+        .day-toggle.active {
+            transform: rotate(180deg);
+        }
+        
+        .day-content {
+            display: none;
+            padding: 0 15px 15px 15px;
+        }
+        
+        .day-content.active {
+            display: block;
+        }
+        
+        .activity-item {
+            display: flex;
+            margin-bottom: 20px;
+            padding-left: 10px;
+        }
+        
+        .activity-icon {
+            color: #4169E1;
+            font-size: 1.2rem;
+            margin-right: 15px;
+            flex-shrink: 0;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .activity-details {
+            flex-grow: 1;
+        }
+        
+        .activity-time {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .activity-name {
+            margin-bottom: 5px;
+        }
+        
+        .activity-notes {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* 必备物品和重要信息 */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .checklist {
+            list-style-type: none;
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .checklist-icon {
+            color: #4169E1;
+            margin-right: 10px;
+        }
+        
+        /* 页脚样式 */
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 30px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .basic-info,
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .card {
+                padding: 15px;
+            }
+            
+            .hero {
+                height: 250px;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero头图部分 -->
+    <div class="hero">
+        <img class="hero-image" src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80" alt="京都风景">
+        <div class="hero-overlay">
+            <h1 class="hero-title">日本京都之旅</h1>
+            <p class="hero-subtitle">探索千年古都的文化与美景 · 2024年4月</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- 基本信息部分 -->
+        <div class="card">
+            <h2>基本信息</h2>
+            <div class="basic-info">
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="far fa-calendar-alt"></i>
+                    </div>
+                    <div class="info-text">
+                        <div class="info-label">出行日期</div>
+                        <div class="info-content">2024年4月1日-4月5日</div>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-user-friends"></i>
+                    </div>
+                    <div class="info-text">
+                        <div class="info-label">出行人数</div>
+                        <div class="info-content">2人 · 情侣出行</div>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <div class="info-text">
+                        <div class="info-label">预算范围</div>
+                        <div class="info-content">¥15,000-20,000/人</div>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="info-text">
+                        <div class="info-label">目的地</div>
+                        <div class="info-content">日本京都</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 行程安排部分 -->
+        <div class="card">
+            <h2>行程安排</h2>
+            <div class="itinerary-container">
+                <!-- 第1天 -->
+                <div class="day-item">
+                    <div class="day-header" data-day="1">
+                        <div class="day-title">第1天</div>
+                        <div class="day-toggle">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div class="day-content" id="day-1-content">
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="far fa-clock"></i>
+                            </div>
+                            <div class="activity-details">
+                                <div class="activity-time">09:00 - 11:30</div>
+                                <div class="activity-name">清水寺参观 (建议游玩2.5小时)</div>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-bus"></i>
+                            </div>
+                            <div class="activity-details">
+                                <div class="activity-time">交通方式</div>
+                                <div class="activity-name">巴士100路 (约30分钟)</div>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-utensils"></i>
+                            </div>
+                            <div class="activity-details">
+                                <div class="activity-time">用餐推荐</div>
+                                <div class="activity-name">清水寺附近的"和久传" - 必须提前预约</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 第2天 -->
+                <div class="day-item">
+                    <div class="day-header" data-day="2">
+                        <div class="day-title">第2天</div>
+                        <div class="day-toggle">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div class="day-content" id="day-2-content">
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="far fa-clock"></i>
+                            </div>
+                            <div class="activity-details">
+                                <div class="activity-time">09:00 - 12:00</div>
+                                <div class="activity-name">金阁寺参观 (建议游玩3小时)</div>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-bus"></i>
+                            </div>
+                            <div class="activity-details">
+                                <div class="activity-time">交通方式</div>
+                                <div class="activity-name">巴士205路 (约25分钟)</div>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-utensils"></i>
+                            </div>
+                            <div class="activity-details">
+                                <div class="activity-time">用餐推荐</div>
+                                <div class="activity-name">金阁寺周边的传统日式料理</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 第3天 -->
+                <div class="day-item">
+                    <div class="day-header" data-day="3">
+                        <div class="day-title">第3天</div>
+                        <div class="day-toggle">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div class="day-content" id="day-3-content">
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="far fa-clock"></i>
+                            </div>
+                            <div class="activity-details">
+                                <div class="activity-time">09:00 - 12:00</div>
+                                <div class="activity-name">伏见稻荷大社 (建议游玩3小时)</div>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-train"></i>
+                            </div>
+                            <div class="activity-details">
+                                <div class="activity-time">交通方式</div>
+                                <div class="activity-name">JR线到稻荷站 (约15分钟)</div>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-utensils"></i>
+                            </div>
+                            <div class="activity-details">
+                                <div class="activity-time">用餐推荐</div>
+                                <div class="activity-name">稻荷寿司，当地特色小吃</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 第4天 -->
+                <div class="day-item">
+                    <div class="day-header" data-day="4">
+                        <div class="day-title">第4天</div>
+                        <div class="day-toggle">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div class="day-content" id="day-4-content">
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="far fa-clock"></i>
+                            </div>
+                            <div class="activity-details">
+                                <div class="activity-time">09:00 - 12:00</div>
+                                <div class="activity-name">岚山竹林 & 渡月桥 (建议游玩3小时)</div>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-train"></i>
+                            </div>
+                            <div class="activity-details">
+                                <div class="activity-time">交通方式</div>
+                                <div class="activity-name">JR嵯峨野线 (约20分钟)</div>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-utensils"></i>
+                            </div>
+                            <div class="activity-details">
+                                <div class="activity-time">用餐推荐</div>
+                                <div class="activity-name">岚山附近的豆腐料理</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 第5天 -->
+                <div class="day-item">
+                    <div class="day-header" data-day="5">
+                        <div class="day-title">第5天</div>
+                        <div class="day-toggle">
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div class="day-content" id="day-5-content">
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="far fa-clock"></i>
+                            </div>
+                            <div class="activity-details">
+                                <div class="activity-time">09:00 - 12:00</div>
+                                <div class="activity-name">京都御所 (建议游玩3小时)</div>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-subway"></i>
+                            </div>
+                            <div class="activity-details">
+                                <div class="activity-time">交通方式</div>
+                                <div class="activity-name">地铁乌丸线 (约15分钟)</div>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-utensils"></i>
+                            </div>
+                            <div class="activity-details">
+                                <div class="activity-time">用餐推荐</div>
+                                <div class="activity-name">京都站内的拉面小路</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 必备物品和重要信息 -->
+        <div class="info-grid">
+            <div class="card">
+                <h2>必备物品</h2>
+                <ul class="checklist">
+                    <li class="checklist-item">
+                        <span class="checklist-icon"><i class="fas fa-passport"></i></span>
+                        <span>护照</span>
+                    </li>
+                    <li class="checklist-item">
+                        <span class="checklist-icon"><i class="fas fa-credit-card"></i></span>
+                        <span>信用卡</span>
+                    </li>
+                    <li class="checklist-item">
+                        <span class="checklist-icon"><i class="fas fa-plug"></i></span>
+                        <span>转换插头</span>
+                    </li>
+                    <li class="checklist-item">
+                        <span class="checklist-icon"><i class="fas fa-wifi"></i></span>
+                        <span>随身WiFi</span>
+                    </li>
+                    <li class="checklist-item">
+                        <span class="checklist-icon"><i class="fas fa-camera"></i></span>
+                        <span>相机</span>
+                    </li>
+                    <li class="checklist-item">
+                        <span class="checklist-icon"><i class="fas fa-umbrella"></i></span>
+                        <span>雨伞</span>
+                    </li>
+                    <li class="checklist-item">
+                        <span class="checklist-icon"><i class="fas fa-pills"></i></span>
+                        <span>常用药品</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h2>重要信息</h2>
+                <div class="important-info">
+                    <div class="checklist-item">
+                        <span class="checklist-icon"><i class="fas fa-sun"></i></span>
+                        <span>天气提醒: 4月平均温度10-20°C</span>
+                    </div>
+                    <div class="checklist-item">
+                        <span class="checklist-icon"><i class="fas fa-language"></i></span>
+                        <span>语言: 日语 (准备翻译APP)</span>
+                    </div>
+                    <div class="checklist-item">
+                        <span class="checklist-icon"><i class="fas fa-phone-alt"></i></span>
+                        <span>紧急电话: 110 (警察), 119 (救护)</span>
+                    </div>
+                    <div class="checklist-item">
+                        <span class="checklist-icon"><i class="fas fa-info-circle"></i></span>
+                        <span>小费: 日本不需要支付小费</span>
+                    </div>
+                    <div class="checklist-item">
+                        <span class="checklist-icon"><i class="fas fa-yen-sign"></i></span>
+                        <span>货币: 日元 (提前兑换)</span>
+                    </div>
+                    <div class="checklist-item">
+                        <span class="checklist-icon"><i class="fas fa-bolt"></i></span>
+                        <span>电压: 100V (需转换插头)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>© 2024 我的旅行计划 | 最后更新: 2024年3月18日</p>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 处理行程折叠/展开功能
+            const dayHeaders = document.querySelectorAll('.day-header');
+            
+            // 默认展开第一天
+            toggleDayContent(1, true);
+            
+            dayHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const dayNumber = this.getAttribute('data-day');
+                    toggleDayContent(dayNumber);
+                });
+            });
+            
+            function toggleDayContent(dayNumber, forceOpen = false) {
+                const content = document.getElementById(`day-${dayNumber}-content`);
+                const header = document.querySelector(`.day-header[data-day="${dayNumber}"]`);
+                const toggle = header.querySelector('.day-toggle');
+                
+                if (content.classList.contains('active') && !forceOpen) {
+                    content.classList.remove('active');
+                    header.classList.remove('active');
+                    toggle.classList.remove('active');
+                } else {
+                    content.classList.add('active');
+                    header.classList.add('active');
+                    toggle.classList.add('active');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
