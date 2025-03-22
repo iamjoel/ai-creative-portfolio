@@ -1,0 +1,31 @@
+<svg width="500" height="auto" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景矩形 -->
+  <rect width="100%" height="100%" rx="16" ry="16" fill="rgb(243, 244, 246)" />
+  
+  <foreignObject width="100%" height="200">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="padding: 30px; box-sizing: border-box; width: 100%; height: 100%;">
+      <style>
+        @font-face {
+          font-family: 'HuiWenMingChao';
+          src: url('Huiwen-mincho.otf') format('opentype');
+        }
+        div {
+          font-family: 'HuiWenMingChao', serif;
+          font-size: 40px;
+          fill: rgb(1, 51, 101);
+        }
+      </style>
+      <div>
+        <div>
+          勇敢的人先享受世界
+        </div>
+        <div style="margin-top: 8px">
+          勇敢的人先享受世界
+        </div>
+        <div style="margin-top: 8px">
+          勇敢的人先享受世界ddfdfdf
+        </div>
+      </div>
+    </div>
+  </foreignObject>
+</svg>
