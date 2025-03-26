@@ -2,4 +2,4 @@
 ## 勇敢的人先享受人生
 ![](brave.svg)
 
-![brave-2.asvg](brave-2.asvg)
+Claude 3.7 加合适的 Prompt 生成的。还是没有主动控制的文字卡片好。
